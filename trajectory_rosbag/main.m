@@ -4,10 +4,10 @@ close all
 % parameters for plotting %
 %=========================%
 bag_select = "2020-12-14-15-42-47.bag";
-bag_select = "optitrack_heart_5s_hovering_param.bag"
+%bag_select = "optitrack_heart_5s_hovering_param.bag"
 
-start_index = 100;
-end_index = 5300;
+start_index = 1042;
+end_index = 3922;
 
 %==================%
 % open rosbag file %
@@ -72,6 +72,15 @@ xd(end_index:end) = [];
 yd(end_index:end) = [];
 zd(end_index:end) = [];
 
+%====================================================%
+%calculate RMSE of the geometric tracking controller %
+%====================================================%
+ex = x - xd;
+ey = y - yd;
+ey_mean = mean(ey);
+ex_mean = mean(ex);
+RMSE = sqrt((ex - ex_mean) .* (ex - ex_mean) + (ey - ey_mean) .* (ey - ey_mean));
+
 %======%
 % plot %
 %======%
@@ -98,3 +107,25 @@ ylim([-1.3 1.3])
 xlim([0, t(end)])
 legend('$\texttt{True state}$', '$\texttt{Trajectory}$', 'Interpreter', 'latex')
 title('Trajectory tracking in Y direction [m]')
+
+figure
+plot(t, x-xd, 'b', 'Linewidth', 2)
+hold on
+plot(t, y-yd, 'r', 'Linewidth', 2)
+xlabel('Time [s]')
+y_label = ylabel('X', 'rotation', 0); grid on;
+set(y_label, 'Units', 'Normalized', 'Position', [-0.11, 0.47]);
+ylim([-1.5 1.5])
+xlim([0, t(end)])
+legend('$\texttt{X error}$', '$\texttt{Y error}$', 'Interpreter', 'latex')
+title('Position error')
+
+figure
+plot(t, RMSE, 'b', 'Linewidth', 2)
+xlabel('Time [s]')
+y_label = ylabel('X', 'rotation', 0); grid on;
+set(y_label, 'Units', 'Normalized', 'Position', [-0.11, 0.47]);
+ylim([-1.5 1.5])
+xlim([0, t(end)])
+legend('$\texttt{Position RMSE}$', 'Interpreter', 'latex')
+title('Position RMSE')
