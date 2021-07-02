@@ -55,6 +55,7 @@ zd = cellfun(@(m) double(m.Data), zd_msgStructs);
 t(end_index:end) = [];
 t_nsec(end_index:end) = [];
 t = t - t(1);
+t_nsec = t_nsec - t_nsec(1);
 t = t + t_nsec * 10^(-9);
 
 x(1:start_index) = [];
