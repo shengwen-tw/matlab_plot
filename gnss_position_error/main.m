@@ -40,14 +40,33 @@ vx_mean = mean(gps_ned_vx);
 vy_mean = mean(gps_ned_vy);
 v_RMSE = sqrt((gps_ned_vx - vx_mean) .* (gps_ned_vx - vx_mean) + (gps_ned_vy - vy_mean) .* (gps_ned_vy - vy_mean));
 
-for i = 2: data_num
+for i = 1: data_num
     pos_ned = ekf.covert_geographic_to_ned_frame(longitude(i), latitude(i), 0);
     gps_ned_x(i) = pos_ned(1);
     gps_ned_y(i) = pos_ned(2);
     gps_ned_z(i) = pos_ned(3);
-    gps_error(i) = sqrt(gps_ned_x(i)*gps_ned_x(i) + gps_ned_y(i)*gps_ned_y(i));
-    RMSE(i) = sqrt((gps_ned_x(i) - x_mean) .* (gps_ned_x(i) - x_mean) + (gps_ned_y(i) - y_mean) .* (gps_ned_y(i) - y_mean));
 end
+
+x_min = min(gps_ned_x);
+x_max = max(gps_ned_x);
+y_min = min(gps_ned_y);
+y_max = max(gps_ned_y);
+x_mid = (x_min + x_max) / 2;
+y_mid = (y_min + y_max) / 2;
+
+for i = 1: data_num
+    pos_true_x(i) = x_mid;
+    pos_true_y(i) = y_mid;
+end
+
+for i = 1: data_num
+    p_error_x = gps_ned_x(i) - x_mid;
+    p_error_y = gps_ned_y(i) - y_mid;
+    RMSE(i) = sqrt(p_error_x * p_error_x + p_error_y * p_error_y);  
+end
+
+disp("accuracy = ");
+disp(mean(RMSE));
 
 %%%%%%%%
 % Plot %
@@ -119,6 +138,22 @@ title('GNSS Velocity Error');
 xlabel('time [s]');
 ylabel('Velocity Error [m/s]');
 xlim([0 timestamp_s(end)]) 
+box on
+
+%2d position trajectory plot of x-y plane
+figure('Name', 'x-y position (enu frame)');
+grid on;
+hold on;
+axis equal;
+plot(gps_ned_x, gps_ned_y, ...
+     'Color', 'k', ...
+     'Marker', 'o', ...
+     'LineStyle', 'None', ...
+     'MarkerSize', 3);
+legend('GNSS Position') ;
+title('GNSS/INS Position');
+xlabel('Y [m]');
+ylabel('X [m]');
 box on
 
 hold on;
