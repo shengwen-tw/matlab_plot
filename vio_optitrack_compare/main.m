@@ -41,7 +41,7 @@ subplot (3, 1, 1);
 hold on;
 plot(timestamp_s, pos_optrack_x);
 plot(timestamp_s, pos_vio_x);
-title('VINS-Mono Position Evaluation');
+title('VINS-Mono Trajectory');
 legend('Optitrack', 'VINS-Mono', 'Location', 'best') ;
 xlabel('time [s]');
 ylabel('x [m]');
@@ -99,9 +99,10 @@ hold on;
 plot(pos_optrack_x, pos_optrack_y, 'Color', 'r')
 plot(pos_vio_x, pos_vio_y, 'Color', 'b');
 legend('OptiTrack', 'VINS-Mono') ;
-title('Trajectory');
+title('VINS-Mono Trajectory');
 xlabel('x [m]');
 ylabel('y [m]');
+box on
 
 hold on;
 %3d visualization of position trajectory
@@ -112,17 +113,16 @@ plot3(pos_optrack_x, pos_optrack_y, pos_optrack_z, 'Color', 'r')
 plot3(pos_vio_x, pos_vio_y, pos_vio_z, 'Color', 'b');
 %legend('gps trajectory', 'b1 vector', 'b2 vector', 'b3 vector') 
 legend('OptiTrack', 'VINS-Mono')
-title('Trajectory');
+title('VINS-Mono Trajectory');
 xlabel('x [m]');
 ylabel('y [m]');
 zlabel('z [m]');
 daspect([1 1 1])
 grid on
 view(56,35);
-
+box on
 
 figure('Name', 'Position Error');
-grid on;
 hold on;
 plot(timestamp_s, error);
 title('Position Error');

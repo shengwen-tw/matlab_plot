@@ -17,7 +17,7 @@ v_acc = csv(:, 3);
 figure('Name', 'GNSS Accuracy');
 subplot (2, 1, 1);
 plot(times_s, h_acc);
-title('GNSS accuracy');
+title('GNSS Accuracy');
 xlabel('time [s]');
 ylabel('Horizontal accuracy [m]');
 xlim([0 times_s(end)]) 

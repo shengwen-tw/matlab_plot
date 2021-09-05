@@ -85,47 +85,43 @@ RMSE = sqrt((ex - ex_mean) .* (ex - ex_mean) + (ey - ey_mean) .* (ey - ey_mean))
 % plot %
 %======%
 figure
-plot(t, x, 'b', 'Linewidth', 2)
+plot(t, x, 'b')
 hold on
-plot(t, xd, 'r', 'Linewidth', 2)
+plot(t, xd, 'r')
 xlabel('Time [s]')
-y_label = ylabel('X', 'rotation', 0); grid on;
-set(y_label, 'Units', 'Normalized', 'Position', [-0.11, 0.47]);
+ylabel('x [m]');
 ylim([-1.5 1.5])
 xlim([0, t(end)])
-legend('$\texttt{True state}$', '$\texttt{Trajectory}$', 'Interpreter', 'latex')
+legend('True state', 'Trajectory')
 title('Trajectory tracking in X direction [m]')
 
 figure
-plot(t, y, 'b', 'Linewidth', 2)
+plot(t, y, 'b')
 hold on
-plot(t, yd, 'r', 'Linewidth', 2)
+plot(t, yd, 'r')
 xlabel('Time [s]')
-y_label = ylabel('Y', 'rotation', 0); grid on;
-set(y_label, 'Units', 'Normalized', 'Position', [-0.11, 0.47]);
+ylabel('y [m]');
 ylim([-1.3 1.3])
 xlim([0, t(end)])
-legend('$\texttt{True state}$', '$\texttt{Trajectory}$', 'Interpreter', 'latex')
+legend('True state', 'Trajectory')
 title('Trajectory tracking in Y direction [m]')
 
 figure
-plot(t, x-xd, 'b', 'Linewidth', 2)
+plot(t, x-xd, 'b')
 hold on
-plot(t, y-yd, 'r', 'Linewidth', 2)
+plot(t, y-yd, 'r')
 xlabel('Time [s]')
-y_label = ylabel('X', 'rotation', 0); grid on;
-set(y_label, 'Units', 'Normalized', 'Position', [-0.11, 0.47]);
+ylabel('Error [m]');
 ylim([-1.5 1.5])
 xlim([0, t(end)])
-legend('$\texttt{X error}$', '$\texttt{Y error}$', 'Interpreter', 'latex')
-title('Position error')
+legend('X error', 'Y error')
+title('Position Error')
 
 figure
-plot(t, RMSE, 'b', 'Linewidth', 2)
+plot(t, RMSE, 'b')
 xlabel('Time [s]')
-y_label = ylabel('X', 'rotation', 0); grid on;
-set(y_label, 'Units', 'Normalized', 'Position', [-0.11, 0.47]);
+ylabel('Total Error [m]');
 ylim([-1.5 1.5])
 xlim([0, t(end)])
-legend('$\texttt{Position RMSE}$', 'Interpreter', 'latex')
+legend('Position RMSE')
 title('Position RMSE')
