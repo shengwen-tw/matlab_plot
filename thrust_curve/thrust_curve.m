@@ -1,3 +1,4 @@
+close all;
 clear all;
 percent = [0; 5; 10; 15; 20; 25; 30; 35; 40; 45; 50; 55; 60; 65; 70; 75; 80; 85; 90; 95; 100];
 thrust = [0; 28; 37; 68; 106; 153; 194; 233; 284; 350; 417; 496; 561; 650; 735; 803; 871; 952; 1120; 1152; 1221];
@@ -21,10 +22,16 @@ end
 
 figure;
 hold on;
-plot(percent, thrust, 'Marker', '.', 'MarkerSize', 5)
-plot(percent, curve, 'Color', 'r');
+box on;
+plot(percent, thrust, 'Color', 'black', ...
+                      'Marker', '.', ...
+                      'MarkerEdgeColor', [0, 0.4470, 0.7410], ...
+                      'MarkerSize', 20, ...
+                      'LineWidth',2)
+plot(percent, curve, 'Color', 'red', ...
+                     'LineWidth',2);
 title('Motor Thrust Curve');
 xlabel('ESC command [%]');
-ylabel('Thrust [gram-force]');
+ylabel('Thrust [gF]');
 xlim([0 percent(end)])
-legend('Measurement', 'Approximate curve')
+legend('Measurement', 'Regression curve')
